@@ -18,11 +18,11 @@
 describe('Un caisse enregistreuse', function () {
     var caisse = new CaisseEnregistreuse();
     it('devrait retourner 2.7€ pour 2 lot de bananes et 2 lots cerises', function () {
-        var total = caisse.calculTotal(["Bananes", "Bananes", "Cerises", "Cerises"]);
+        var total = caisse.calculTotal([new Bananes(), new Bananes(), new Cerises(), new Cerises()]);
         total.should.be.equal(270);
     });
     it('devrait retourner 5€ pour 1 lot de bananes, 4 lots cerises et 2 lots de pommes', function () {
-        var total = caisse.calculTotal(["Cerises", "Pommes", "Cerises", "Bananes", "Pommes", "Bananes", "Cerises"]);
+        var total = caisse.calculTotal([new Cerises(), new Pommes(), new Cerises(), new Bananes(), new Pommes(), new Bananes(), new Cerises()]);
         total.should.be.equal(545);
     });
 });

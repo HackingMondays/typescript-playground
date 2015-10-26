@@ -1,33 +1,41 @@
-var prices = {
-    "pommes": 100,
-    "bananes": 150,
-    "cerises": 75
+interface Fruits {
+    price():Number;
+    is(name: Stirng): Boolean;
 }
 
-var reductions = {
-    "cerises": {
-        "qty": 2,
-        "amount": 20
+class Pommes implements Fruits {
+    public price():Number {
+        return 100
+    }
+    public is(name: String): Boolean {
+        return name == "Pommes"
+    }
+}
+
+class Cerises implements Fruits {
+    public price():Number {
+        return 75
+    }
+    public is(name: String): Boolean {
+        return name == "Cerises"
+    }
+}
+
+class Bananes implements Fruits {
+    public price():Number {
+        return 150
+    }
+    public is(name: String): Boolean {
+        return name == "Bananes"
     }
 }
 
 class CaisseEnregistreuse {
-    public calculTotal(entrees: Array<String>): Number {
-        var map = entrees.map(v => v.toLowerCase())
-            .reduce((acc, v) => {
-                acc[v] = (acc[v] || 0) + 1
-                return acc
-            }, {})
-        console.log('=')
-        return Object.keys(prices).map((fruit) => {
-            var qty = map[fruit] || 0
-            var price = qty * prices[fruit];
-            var reduction = reductions[fruit];
-            if (reduction) {
-                price -= Math.floor(qty / reduction.qty) * reduction.amount
-            }
-            console.log(price, fruit, qty)
-            return price
-        }).reduce((acc, value) => acc + value, 0)
+    public calculTotal(entrees:Array<Fruits>): Number {
+        var total = entrees.map(fruit => fruit.price())
+            .reduce((acc, price) => acc + price, 0);
+        var reduction = Math.floor(entrees.filter(fruit => fruit.is("Cerises")).length/2) * 20
+
+        return total - reduction;
     }
 }
