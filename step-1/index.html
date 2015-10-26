@@ -51,6 +51,7 @@
 <div id="mocha-container">
     <h3>Résultats des tests</h3>
     <a id="run-tests">RUN</a>
+    <a href="/step-2">Suivant</a>
 
     <div id="mocha">
 
@@ -78,20 +79,26 @@
     }
 
     var editor, tests;
-    $.get("./base.ts", function (data) {
+    function loadScript(data) {
         $('#editor').text(data);
         editor = ace.edit("editor");
         editor.setTheme("ace/theme/monokai");
         editor.getSession().setMode("ace/mode/typescript");
 
         $('#run-tests').click(function () {
+            localStorage.setItem("step-1", editor.getValue());
             var code = ts.transpile(editor.getValue());
             mocha.suite.suites = [];
             $('#mocha').html('');
             maskedEval(code + ";"+tests.getValue());
             mocha.run();
         });
-    });
+    }
+    if(localStorage['step-1']) {
+        loadScript(localStorage['step-1'])
+    } else {
+        $.get("./base.ts", loadScript);
+    }
     $.get("./tests.js", function (data) {
         $('#tests').text(data);
         tests = ace.edit("tests");

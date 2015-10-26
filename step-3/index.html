@@ -78,12 +78,29 @@
     }
 
     var editor, tests;
+    function loadScript(data) {
+        $('#editor').text(data);
+        editor = ace.edit("editor");
+        editor.setTheme("ace/theme/monokai");
+        editor.getSession().setMode("ace/mode/typescript");
 
-    editor = ace.edit("editor");
-    editor.setTheme("ace/theme/monokai");
-    editor.getSession().setMode("ace/mode/typescript");
+        $('#run-tests').click(function () {
+            localStorage.setItem("step-3", editor.getValue());
+            var code = ts.transpile(editor.getValue());
+            mocha.suite.suites = [];
+            $('#mocha').html('');
+            maskedEval(code + ";"+tests.getValue());
+            mocha.run();
+        });
+    }
 
+    if(localStorage['step-3'] || localStorage['step-2']) {
+        loadScript(localStorage['step-3'] || localStorage['step-2'])
+    } else {
+        $.get("/step-1/base.ts", loadScript);
+    }
     $('#run-tests').click(function () {
+        localStorage.setItem("step-3", editor.getValue());
         var code = ts.transpile(editor.getValue());
         mocha.suite.suites = [];
         $('#mocha').html('');
