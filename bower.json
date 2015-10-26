@@ -1,0 +1,25 @@
+{
+  "name": "typescript-editor",
+  "version": "0.0.0",
+  "authors": [
+    "Ludovic Lafole <ludovic.lafole@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "ace-builds": "1.2.0",
+    "mocha": "2.3.3",
+    "chai": "3.3.0",
+    "jquery": "2.1.4"
+  }
+}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Js tests</title>
+    <link rel="stylesheet" href="/bower_components/mocha/mocha.css">
+    <style media="screen">
+        body {
+            overflow: hidden;
+        }
+
+        #editor {
+            margin: 0;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 50%;
+        }
+
+        #tests {
+            margin: 0;
+            position: absolute;
+            top: 0;
+            bottom: 50%;
+            left: 50%;
+            right: 0;
+        }
+
+        #mocha-container {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            bottom: 0;
+            left: 50%;
+            right: 0;
+        }
+
+        #mocha-stats {
+            position: absolute !important;
+        }
+    </style>
+</head>
+<body>
+<div id="editor">// Here is your typescript</div>
+<div id="tests">
+describe('test1', function () {
+    it('should be ok', function () {
+
+    });
+});
+</div>
+<div id="mocha-container">
+    <h3>Résultats des tests</h3>
+    <a id="run-tests">RUN</a>
+
+    <div id="mocha">
+
+    </div>
+</div>
+
+<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/node_modules/typescript/lib/typescript.js"></script>
+<script src="/bower_components/ace-builds/src-min-noconflict/ace.js"></script>
+<script src="/bower_components/mocha/mocha.js"></script>
+<script src="/bower_components/chai/chai.js"></script>
+<script>
+    function maskedEval(scr, mask) {
+        if (!mask) {
+            mask = {};
+        }
+        (new Function("with(this) { " + scr + "}")).call(mask);
+        return mask
+    }
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/monokai");
+    editor.getSession().setMode("ace/mode/typescript");
+
+    var tests = ace.edit("tests");
+    tests.setTheme("ace/theme/monokai");
+    tests.setReadOnly(true);
+    tests.getSession().setMode("ace/mode/typescript");
+
+    mocha.setup('bdd');
+
+    $('#run-tests').click(function () {
+        var code = ts.transpile(editor.getValue());
+        var scope = maskedEval(code);
+        mocha.suite.suites = [];
+        $('#mocha').html('');
+        maskedEval(tests.getValue(), scope);
+        console.log(scope);
+        mocha.run();
+    });
+
+</script>
+</body>
+</html>
