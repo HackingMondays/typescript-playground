@@ -1,25 +1,25 @@
 interface Fruits {
-    price():Number;
+    price():number;
 }
 
 class Pommes implements Fruits {
-    public price():Number {
+    public price():number {
         return 0
     }
 }
 class Cerises implements Fruits {
-    public price():Number {
+    public price():number {
         return 0
     }
 }
 class Bananes implements Fruits {
-    public price():Number {
+    public price():number {
         return 0
     }
 }
 
 class CaisseEnregistreuse {
-    public calculTotal(entrees:Array<Fruits>): Number {
+    public calculTotal(entrees:Array<Fruits>): number {
         return entrees.map(fruit => fruit.price())
             .reduce((acc, price) => acc + price, 0);
     }
