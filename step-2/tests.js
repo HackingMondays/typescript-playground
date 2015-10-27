@@ -14,13 +14,13 @@
 
  */
 
-describe('Un caisse enregistreuse', function () {
+describe('Une caisse enregistreuse', function () {
     var caisse = new CaisseEnregistreuse();
     it('devrait retourner 2.30€ pour 1 lot de pommes et 2 lots cerises', function () {
         var total = caisse.calculTotal([new Pommes(), new Cerises(), new Cerises()]);
         total.should.be.equal(230);
     });
-    it('devrait retourner 5.45€ pour 2 lot de bananes, 3 lots cerises et 2 lots de pommes', function () {
+    it('devrait retourner 6.10€ pour 1 lot de bananes, 4 lots cerises et 2 lots de pommes', function () {
         var total = caisse.calculTotal([new Cerises(), new Pommes(), new Cerises(), new Bananes(), new Cerises(), new Cerises(), new Pommes()]);
         total.should.be.equal(610);
     });

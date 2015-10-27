@@ -20,7 +20,7 @@
 
 */
 
-describe('Un caisse enregistreuse', function () {
+describe('Une caisse enregistreuse', function () {
     var caisse = new CaisseEnregistreuse();
     console.log(caisse, CaisseEnregistreuse);
     it('devrait retourner 2.5€ pour 1 lot de pommes et 2 lots cerises', function () {
